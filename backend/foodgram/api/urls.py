@@ -4,11 +4,8 @@ from rest_framework import routers
 from .views import IngredientViewSet, RecipeViewSet, UserViewSet
 
 router = routers.SimpleRouter()
-router.register('ingredients', IngredientViewSet)
-router.register('recipes', RecipeViewSet)
-router.register('users', UserViewSet)
+router.register("ingredients", IngredientViewSet)
+router.register("recipes", RecipeViewSet)
+router.register("users", UserViewSet)
 
-urlpatterns = [
-    path('', include(router.urls))
-]
-
+urlpatterns = [path("", include(router.urls))]

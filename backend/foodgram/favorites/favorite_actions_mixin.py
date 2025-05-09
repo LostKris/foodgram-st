@@ -6,27 +6,36 @@ from rest_framework.response import Response
 
 from api.serializers import RecipeMinifiedSerializer
 from core_models.models import Recipe
-from favorites.favorite_manage import add_favorite_recipe, remove_favorite_recipe
+from favorites.favorite_manage import (
+    add_favorite_recipe,
+    remove_favorite_recipe,
+)
 
 
 class FavoriteActionsMixin:
     @action(
-        methods=['post', 'delete'],
+        methods=["post", "delete"],
         detail=True,
-        url_path='favorite',
-        url_name='favorite',
+        url_path="favorite",
+        url_name="favorite",
         permission_classes=(IsAuthenticated,),
     )
     def favorite(self, request, pk):
         user = request.user
         recipe = get_object_or_404(Recipe, pk=pk)
         match request.method:
-            case 'POST':
+            case "POST":
                 serializer = RecipeMinifiedSerializer(
-                    add_favorite_recipe(user, recipe)
+                    add_favorite_recipe(
+                        user,
+                        recipe,
+                    ),
                 )
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            case 'DELETE':
+                return Response(
+                    serializer.data,
+                    status=status.HTTP_201_CREATED,
+                )
+            case "DELETE":
                 remove_favorite_recipe(user, recipe)
                 return Response(status=status.HTTP_204_NO_CONTENT)
         return None

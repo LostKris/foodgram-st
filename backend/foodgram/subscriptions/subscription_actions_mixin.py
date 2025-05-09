@@ -11,10 +11,10 @@ from .subscription_manage import subscribe, unsubscribe
 class SubscriptionActionsMixin:
 
     @action(
-        methods=['get'],
+        methods=["get"],
         detail=False,
-        url_path='subscriptions',
-        url_name='subscriptions',
+        url_path="subscriptions",
+        url_name="subscriptions",
         permission_classes=(IsAuthenticated,),
     )
     def get_subscriptions(self, request):
@@ -26,44 +26,48 @@ class SubscriptionActionsMixin:
                 page,
                 many=True,
                 context={
-                    'request': request,
-                    'recipes_limit': self.get_recipes_limit(request)},
+                    "request": request,
+                    "recipes_limit": self.get_recipes_limit(request),
+                },
             )
             return self.get_paginated_response(serializer.data)
         serializer = UserWithRecipesSerializer(
             sub_users,
             many=True,
             context={
-                'request': request,
-                'recipes_limit': self.get_recipes_limit(request)},
+                "request": request,
+                "recipes_limit": self.get_recipes_limit(request),
+            },
         )
         return Response(serializer.data)
 
-
-
     @action(
-        methods=['post', 'delete'],
+        methods=["post", "delete"],
         detail=True,
-        url_path='subscribe',
-        url_name='subscribe',
+        url_path="subscribe",
+        url_name="subscribe",
         permission_classes=(IsAuthenticated,),
     )
     def subscription(self, request, id):
         user = request.user
         author = get_object_or_404(get_user_model(), pk=id)
         match request.method:
-            case 'POST':
+            case "POST":
                 serializer = UserWithRecipesSerializer(
                     subscribe(user, author),
                     context={
-                        'request': request,
-                        'recipes_limit': self.get_recipes_limit(request)},
+                        "request": request,
+                        "recipes_limit": self.get_recipes_limit(request),
+                    },
                 )
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            case 'DELETE':
+                return Response(
+                    serializer.data,
+                    status=status.HTTP_201_CREATED,
+                )
+            case "DELETE":
                 unsubscribe(user, author)
                 return Response(status=status.HTTP_204_NO_CONTENT)
         return None
 
     def get_recipes_limit(self, request):
-        return int(request.query_params.get('recipes_limit', 10))
+        return int(request.query_params.get("recipes_limit", 10))

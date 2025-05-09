@@ -14,7 +14,6 @@ class UserViewSet(views.UserViewSet, SubscriptionActionsMixin):
     queryset = get_user_model().objects.all()
     permission_classes = (permissions.IsAuthenticatedOrReadOnlyAndNotMe,)
 
-
     @action(
         detail=False,
         methods=('put', 'delete'),
