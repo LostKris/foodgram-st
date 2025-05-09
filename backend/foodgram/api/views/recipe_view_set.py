@@ -1,4 +1,5 @@
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -16,8 +17,12 @@ class RecipeViewSet(
 ):
     queryset = Recipe.objects.all()
     http_method_names = ["get", "post", "patch", "delete"]
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.OrderingFilter,
+    ]
     filterset_class = RecipeFilter
+    ordering_fields = ('-pub_date',)
     permission_classes = (permissions.IsOwnerOrReadOnly,)
 
     def get_serializer_class(self):
