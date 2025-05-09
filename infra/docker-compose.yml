@@ -37,8 +37,9 @@ services:
       sh -c "
         python manage.py collectstatic --noinput &&
         cp -r /app/docs /app/static/backend/docs &&
+        sleep 5 &&
         python manage.py migrate &&
-        python manage.py load_ingredients &&
+        python manage.py loaddata data/data.json &&
         gunicorn --bind 0.0.0.0:8000 foodgram.wsgi:application
       "
     restart: unless-stopped
