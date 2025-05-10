@@ -46,6 +46,7 @@ services:
       sh -c "
         python manage.py collectstatic --noinput &&
         cp -r /app/docs /app/static/backend/docs &&
+        cp -r /app/data/_media/* /app/media/ &&
         sleep 5 &&
         python manage.py migrate &&
         python manage.py loaddata data/data.json &&
