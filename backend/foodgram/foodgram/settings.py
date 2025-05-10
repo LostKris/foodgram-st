@@ -32,9 +32,6 @@ DEBUG = os.getenv('DEBUG', default='true').lower() == 'true'
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '127.0.0.1 localhost').split()
 CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', 'http://127.0.0.1 http://localhost').split()
 
-
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -135,8 +132,6 @@ USE_TZ = True
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
