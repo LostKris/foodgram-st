@@ -22,9 +22,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install flake8
-    - name: install requirements
+    - name: Analysing the code with pylint
       run: |
         cd backend/foodgram
-        pip install -r requirements.txt
-    - name: Analysing the code with pylint
-      run: find . -name "*.py" -and -not -wholename "*/migrations/*" | xargs -r flake8
+        find . -name "*.py" -and -not -wholename "*/migrations/*" | xargs -r flake8
