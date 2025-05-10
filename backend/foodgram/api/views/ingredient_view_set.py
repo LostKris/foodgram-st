@@ -10,3 +10,6 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = None
     filter_backends = [filters.SearchFilter]
     search_fields = ['^name']
+
+
+    
