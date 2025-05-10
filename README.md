@@ -1,5 +1,4 @@
 # FOODGRAM
-[![Linter (Flake 8)](https://github.com/LostKris/foodgram-st/actions/workflows/lint.yml/badge.svg)](https://github.com/LostKris/foodgram-st/actions/workflows/lint.yml)
 
 Foodgram - это онлайн-платформа для сохранения и обмена рецептами.
 
