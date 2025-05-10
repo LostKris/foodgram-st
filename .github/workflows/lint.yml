@@ -27,4 +27,4 @@ jobs:
         cd backend/foodgram
         pip install -r requirements.txt
     - name: Analysing the code with pylint
-      run: find . -name "*.py" -and -not -wholename "*/migrations/*" -exec flake8 {} \;
+      run: find . -name "*.py" -and -not -wholename "*/migrations/*" | xargs -r flake8
