@@ -18,7 +18,7 @@ services:
     restart: unless-stopped
 
   backend:
-    image: LostKris/foodgram_backend:latest
+    image: lostkris/foodgram_backend:latest
     container_name: foodgram-backend
     build: ../backend/foodgram
     depends_on:
