@@ -1,4 +1,4 @@
-name: Linter (Flake 8)
+name: Main Workflow
 
 on: 
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  linter:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -26,3 +26,26 @@ jobs:
       run: |
         cd backend/foodgram
         find . -name "*.py" -and -not -wholename "*/migrations/*" | xargs -r flake8
+        
+  publish_docker:
+    runs-on: ubuntu-latest
+    needs: linter
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    - name: login
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Build the Docker image
+      run: |
+        cd backend/foodgram
+        export VERSION=$(git rev-list --count origin/main)
+        docker build . --file Dockerfile --tag lostkris/foodgram_backend:$VERSION
+        docker push lostkris/foodgram_backend:$VERSION
+        docker tag lostkris/foodgram_backend:$VERSION lostkris/foodgram_backend:latest
+        docker push lostkris/foodgram_backend:latest
+  
