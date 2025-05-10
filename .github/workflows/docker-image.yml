@@ -20,8 +20,8 @@ jobs:
       run: |
         cd backend/foodgram
         export VERSION=$(git rev-list --count origin/main)
-        docker build . --file Dockerfile --tag LostKris/foodgram_backend:$VERSION
-        docker push LostKris/foodgram_backend:$VERSION
-        docker tag LostKris/foodgram_backend:$VERSION LostKris/foodgram_backend:latest
-        docker push LostKris/foodgram_backend:latest
+        docker build . --file Dockerfile --tag lostkris/foodgram_backend:$VERSION
+        docker push lostkris/foodgram_backend:$VERSION
+        docker tag lostkris/foodgram_backend:$VERSION lostkris/foodgram_backend:latest
+        docker push lostkris/foodgram_backend:latest
         
